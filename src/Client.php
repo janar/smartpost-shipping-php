@@ -15,7 +15,7 @@ class Client {
   public $lastError = "";
 
   public function __construct( $username, $password, $baseUri = null ){
-    if(!$username || !$password){
+    if( !$username || !$password ){
       throw new \Exception( "Please provide username and password to use this client" );
     }
     
@@ -31,12 +31,9 @@ class Client {
   /**
    * Get destionations list from Smartpost service
    * 
-   * @return boolean
+   * @return array
    */
   public function getDestinations( ){
-    $content = $this->getPushShipmentsXml();
-    
-    print_r( $content );
     
     return true;
   }
@@ -192,6 +189,8 @@ class Client {
   /**
    * Push new shipment into queue
    * 
+   * TODO: I think this "queue" variant is not good. Should use some pattern?
+   * 
    * @param Shipment $shipment
    * @return string
    */
@@ -201,7 +200,17 @@ class Client {
   
   
   /**
-   * Generate XML for posting new shipments to Smartpost service
+   * Remove shipments from queue
+   * 
+   * @return void
+   */
+  public function clearShipmentsQueue( ){
+    $this->shipments = array();
+  }
+  
+  
+  /**
+   * Generate XML for posting queued shipments to Smartpost service
    * 
    * @return string
    */
