@@ -22,9 +22,31 @@ class Recipient {
     }
     
     $this->fullname = $fullname;
-    $this->phone = $phone;
+    $this->phone = $this->cleanupPhoneNumber( $phone );
     $this->email = $email;
   }
+  
+  
+  /**
+   * Remove spaces, remove +372
+   * 
+   * @param string $phone
+   * @return string
+   */
+  public function cleanupPhoneNumber( $phone ){
+    $phone = str_replace(
+      array(' ', '+'),
+      '',
+      $phone
+    );
+    
+    if( substr( $phone, 0, 3 ) == '372' ){
+      $phone = mb_substr( $phone, 3 );
+    }
+    
+    return $phone;
+  }
+  
   
   /**
    * Generate XML for posting new shipments to Smartpost service

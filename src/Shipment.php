@@ -4,15 +4,38 @@ namespace SmartpostShippingPhp;
 
 class Shipment {
   
-  public $destinationId = '';
-  public $trackingCode = '';
-  public $reference = '';
-  public $recipient = null;
-  public $doorcode = null;
+  private $referenceOrderId = 0;
+  private $destinationId = '';
+  private $trackingCode = '';
+  private $reference = '';
+  private $recipient = null;
+  private $doorcode = null;
   
   public function __construct(){
     
   }
+  
+  /**
+   * Not needed by smartpost, but can be handy to pass order id values along
+   * when creating / sending shipments. 
+   * 
+   * @param int $referenceOrderId
+   * @return void
+   */
+  public function setReferenceOrderId( $referenceOrderId ){
+    $this->referenceOrderId = $referenceOrderId;
+  }
+  
+  
+  /**
+   * -
+   * 
+   * @return int
+   */
+  public function getReferenceOrderId( ){
+    return $this->referenceOrderId;
+  }
+  
   
   /**
    * In which parcel automat to send this shipment
@@ -34,15 +57,38 @@ class Shipment {
     $this->trackingCode = $code;
   }
   
+  
   /**
+   * -
    * 
+   * @return string
+   */
+  public function getTrackingNumber( ){
+    return $this->trackingCode;
+  }
+  
+  
+  /**
+   * Message on shipment label. something like "Storename - Order 4456" or just 
+   * order ID. Can leave empty also- not required field. 
    * 
-   * @param int $placeId
+   * @param string
    * @return void
    */
   public function setReference( $reference ){
     $this->reference = $reference;
   }
+  
+  
+  /**
+   * -
+   * 
+   * @return string
+   */
+  public function getReference( ){
+    return $this->reference;
+  }
+  
   
   /**
    * 
