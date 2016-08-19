@@ -14,8 +14,32 @@ API docs can be found here:
 # 3. pictures say more than 1000 words
 
 ### 1) Creating shipments: 
-![Alt text](https://cloud.githubusercontent.com/assets/893499/17436623/fffb49ac-5b20-11e6-9151-0332fac9f61d.png "Creating shipments") 
+```
+$spApi = new Client( "smartpost username", "smartpost password" );
 
+
+//create shipments
+$shipment = new Shipment();
+$shipment->setRecipient( new Recipient( "John Doe", "56666661", "john.doe@doe123.com" ) );
+$shipment->setReference( '[MyAwsomeWebShop] - test #1' );
+$shipment->setDestination( new ParcelTerminal( 172 ) );
+$spApi->addShipment( $shipment );
+
+
+$shipment = new Shipment();
+$shipment->setRecipient( new Recipient( "John Doe2", "56666662", "john.doe2@doe123.com" ) );
+$shipment->setReference( '[MyAwsomeWebShop] - test #2' );
+$shipment->setDestination( new ParcelTerminal( 171 ) );
+$spApi->addShipment( $shipment );
+
+
+$shipment = new Shipment();
+$shipment->setRecipient( new Recipient( "John Doe3", "56666663", "john.doe3@doe123.com" ) );
+$shipment->setDestination( new ParcelTerminal( null, "3202", "00215" ) );
+$spApi->addShipment( $shipment );
+
+$result = $spApi->postShipments();
+```
 
 ### 2) Creating shipments result: 
 ![Alt text](https://cloud.githubusercontent.com/assets/893499/17436624/ffff0786-5b20-11e6-8107-4b967971af61.png "Creating shipments result") 

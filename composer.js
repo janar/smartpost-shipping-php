@@ -1,0 +1,26 @@
+{
+  "name": "janar/smartpost-shipping-php",
+  "description": "Simple client library for PHP to create shipments using smartpost web service",
+  "keywords": [
+    "smartpost",
+    "api",
+    "client",
+    "pakiautomaat"
+  ],
+  "homepage": "https://github.com/janar/smartpost-shipping-php",
+  "authors": [
+    {
+      "name": "Jana Jürisson",
+      "homepage": "https://github.com/janar"
+    }
+  ],
+  "require": {
+      "php": "^5.3"
+  },
+  "type": "library",
+  "autoload": {
+    "psr-4": {
+      "SmartpostShippingPhp\\":"src/"
+    }
+  }
+}
