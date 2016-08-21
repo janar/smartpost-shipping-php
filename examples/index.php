@@ -4,7 +4,6 @@ namespace SmartpostExamples;
 use SmartpostShippingPhp\Client;
 use SmartpostShippingPhp\Shipment;
 use SmartpostShippingPhp\Shipment\Recipient;
-use SmartpostShippingPhp\Shipment\Destination\Courier;
 use SmartpostShippingPhp\Shipment\Destination\ParcelTerminal;
 
 //TODO: add autoloader later
@@ -12,7 +11,6 @@ include '../src/Client.php';
 include '../src/Shipment.php';
 include '../src/Shipment/Recipient.php';
 include '../src/Shipment/Destination/ParcelTerminal.php';
-include '../src/Shipment/Destination/Courier.php';
 
 
 //get configuration
