@@ -72,6 +72,39 @@ class Client {
   
   
   /**
+   * This method returns raw PDF document which cane be saved as file or streamed 
+   * directly to browser. 
+   * 
+   * @param array $trackingCodes
+   * @param string $format
+   * @return string Raw pdf document
+   */
+  public function getShippingLabels( $trackingCodes, $format ){
+    $shipmentsXml = $this->getShippingLabelsXml( $trackingCodes, $format );
+    
+    $curl = curl_init( $this->apiBaseUrl . '?request=labels' );
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
+    curl_setopt($curl, CURLOPT_POSTFIELDS, $shipmentsXml);
+    $xmlstr = curl_exec( $curl );
+    curl_close( $curl );
+    
+    //special check for error since on successful result it will be raw pdf contents
+    if( substr( $xmlstr, 0, 7 ) == '<error>' ){
+      $check = $this->xmlResultHasErrors( $xmlstr );
+      //paranoia here
+      if( !$check ){
+        $this->lastError = 'Parsing error message failed. ';
+      }
+      return false;
+    }
+    
+    return $xmlstr;
+  }
+  
+  
+  /**
    * -
    * 
    * @return string XML result given by API
@@ -221,15 +254,60 @@ class Client {
       $shipments .= $shipment->getXml();
     }
     
-    $xml = "
+    $xml = '
       <orders>
-        <authentication>
-          <user>" . $this->username . "</user>
-          <password>" . $this->password . "</password>
-        </authentication>
-        " . $shipments . "
+        ' . $this->getAuthenticationXml() . '
+        ' . $shipments . '
       </orders>
-    ";
+    ';
+    
+    return $xml;
+  }
+  
+  
+  /**
+   * Generate XML for getting shipping labels from Smartpost service
+   * 
+   * @param array $trackingCodes
+   * @param string $format
+   * @return string
+   */
+  private function getShippingLabelsXml( $trackingCodes, $format ){
+    $labels = '';
+    
+    foreach( $trackingCodes as $k => $trackingCode ){
+      $labels .= '<barcode>' . $trackingCode . '</barcode>';
+    }
+    
+    $xml = '
+      <orders>
+        ' . $this->getAuthenticationXml() . '
+        <format>' . $format . '</format>
+        ' . $labels . '
+      </orders>
+    ';
+    
+    return $xml;
+  }
+  
+  /**
+   * Most requests need authentication. 
+   * Except querying for parcel terminal locations. Then password and username
+   * would be not needed. So authentication part would not be needed also. 
+   * 
+   * @return string
+   */
+  public function getAuthenticationXml(){
+    if( !$this->username || !$this->password ){
+      return '';
+    }
+    
+    $xml = '
+      <authentication>
+        <user>' . $this->username . '</user>
+        <password>' . $this->password . '</password>
+      </authentication>
+    ';
     
     return $xml;
   }
