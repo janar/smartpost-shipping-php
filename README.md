@@ -1,12 +1,16 @@
 # Client library for Itella Smartpost API written in PHP. 
 
-Simple PHP client for creating (Itella) Smartpost parcels via web API. 
-Currently in development, but shipments to 
-parcel terminals (Estonia and Finland) work. Uses CURL for requests. 
-Many requests and features not here yet. 
+Simple PHP client for creating Itella Smartpost (http://uus.smartpost.ee/) parcels 
+via web API. Can be used to automate parcel creation and getting shipping labels for them. 
 
-*Smartpost API docs can be found here: 
-* http://uus.smartpost.ee/ariklient/ostukorvi-rippmenuu-lisamise-opetus/automaatse-andmevahetuse-opetus
+Communication is done using XML. Original Smartpost API documents can be found here: http://uus.smartpost.ee/ariklient/ostukorvi-rippmenuu-lisamise-opetus/automaatse-andmevahetuse-opetus 
+
+Currently this library is in development, but shipments 
+to parcel terminals (Estonia and Finland) work. Also you can request 
+shipping labels from API. So you would never have to enter Smartpost client area. 
+
+* Uses CURL for requests. 
+* Many requests and features not here yet. 
 
 ***
 
@@ -20,7 +24,9 @@ $ composer require janar/smartpost-shipping-php
 
 # Basic usage
 
-Most basic and useful feature in this library would be creating shipments on your server. Removes need for manual exporting/importing CSV files to Smartpost environment. 
+Most basic and useful feature in this library would be creating shipments 
+on your own server. Removes need for manual exporting/importing CSV files 
+to Smartpost environment. 
 
 ## Creating shipments: 
 ```php
@@ -68,7 +74,7 @@ Formats are following:
 | A7-8          | 8 labels fitted on A7 sized paper  |
 | A6            | 1 label on A6 sized paper  |
 
-Labels are on one continuous pdf document. 
+Labels are on one continuous pdf document. You can choose what to do with result. Save as file or view in browser.  
 
 ```php
 
@@ -88,6 +94,7 @@ if( $result === false  ){
 ```
 
 Results would look something like this: 
+
 ![Alt text](https://cloud.githubusercontent.com/assets/893499/17839835/75d10ef8-67fd-11e6-8733-a2727ec6d8ce.png "Labels ready for printing") 
 
 
