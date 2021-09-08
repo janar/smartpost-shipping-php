@@ -3,7 +3,7 @@
 namespace SmartpostShippingPhp\Shipment\Destination;
 
 /**
- * Use this destination type for finnish or estonian parcel automat/terminal
+ * Use this destination type for finnish or estonian parcelshop/terminal
  *
  * Smartpost documentation says:
  *   - When sending parcel to EE parcel terminal, fill “Place_id”.
@@ -12,20 +12,13 @@ namespace SmartpostShippingPhp\Shipment\Destination;
  */
 
 class ParcelTerminal {
-  private $placeId = "";
-  private $postalCode = "";
-  private $routingCode= "";
 
+  private array $destinationData;
+  private bool $parcelShop;
 
-  public function __construct( $placeId, $routingCode = null, $postalCode = null ){
-
-    if( !$placeId && ( !$postalCode || !$routingCode ) ){
-      throw new \Exception( "Please provide destination data" );
-    }
-
-    $this->placeId = $placeId;
-    $this->postalCode = $postalCode;
-    $this->routingCode = $routingCode;
+  public function __construct(array $destinationData, bool $parcelShop = true){
+    $this->destinationData = $destinationData;
+    $this->parcelShop = $parcelShop;
   }
 
   /**
@@ -33,29 +26,27 @@ class ParcelTerminal {
    *
    * @return string
    */
-  public function getXml(){
-    if( $this->routingCode && $this->postalCode ){
-        $xml = "
+  public function getXml(): string{
+    if ($this->parcelShop) {
+      return "
         <destination>
-          <street>Test1</street>
-          <house>Test2</house>
-          <apartment>Test3</apartment>
-          <city>Test4</city>
-          <country>Test5</country>
-          <postalcode>Test6</postalcode>
-          <details>Test7</details>
-          <timewindow>1</timewindow>
+          <place_id>" . $this->destinationData['place_id'] . "</place_id>
         </destination>
       ";
     } else {
-      $xml = "
+      return "
         <destination>
-          <place_id>" . $this->placeId . "</place_id>
+          <street>" . $this->destinationData['street'] . "</street>
+          <house>" . $this->destinationData['house'] . "</house>
+          <apartment>" . $this->destinationData['apt'] . "</apartment>
+          <city>" . $this->destinationData['city'] . "</city>
+          <country>" . $this->destinationData['country'] . "</country>
+          <postalcode>" . $this->destinationData['zip'] . "</postalcode>
+          <details>" . $this->destinationData['details'] . "</details>
+          <timewindow>" . $this->destinationData['time_window'] . "</timewindow>
         </destination>
       ";
     }
-
-    return $xml;
   }
 }
 
