@@ -37,14 +37,14 @@ class ParcelTerminal {
     if( $this->routingCode && $this->postalCode ){
         $xml = "
         <destination>
-          <street>Test</street>
-          <House>Test</House>
-          <Apartment>Test</Apartment>
-          <City>Test</City>
-          <Country>Test</Country>
-          <PostalCode>Test</PostalCode>
-          <Details>Test</Details>
-          <TimeWindow>Test</TimeWindow>
+          <street>Test1</street>
+          <house>Test2</house>
+          <apartment>Test3</apartment>
+          <city>Test4</city>
+          <country>Test5</country>
+          <postalcode>Test6</postalcode>
+          <details>Test7</details>
+          <timewindow>Test8</timewindow>
         </destination>
       ";
     } else {
