@@ -44,7 +44,7 @@ class ParcelTerminal {
           <country>Test5</country>
           <postalcode>Test6</postalcode>
           <details>Test7</details>
-          <timewindow>Test8</timewindow>
+          <timewindow>1</timewindow>
         </destination>
       ";
     } else {
