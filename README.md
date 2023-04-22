@@ -1,3 +1,8 @@
+# Note
+
+API changed in 2023 Q1 https://smartpost.sendsmaily.net/templates/e4e01c50-639d-4b3b-9d16-e9401d60a7ec/html/
+I have not tested that does this implementation here still work. 
+
 # Client library for Itella Smartpost API written in PHP. 
 
 Simple PHP client for creating Itella Smartpost (http://uus.smartpost.ee/) parcels 
